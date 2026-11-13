@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b3a6b"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png">
+<title>그리스 여행</title>
+<style>
+:root{--b:#0b3a6b;--s:#e8f1f7;--t:#14202b;--g:#546574;--a:#f2b01e;--r:#b3261e}
+*{box-sizing:border-box}
+body{margin:0;font:18px/1.5 system-ui,"Noto Sans KR","Apple SD Gothic Neo",sans-serif;color:var(--t);background:var(--s);padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+header{background:var(--b);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 12px}
+header h1{font-size:23px;margin:0}header small{font-size:15px;opacity:.85}
+main{padding:12px 14px}
+h2{font-size:22px;margin:14px 0 6px}
+.card{background:#fff;border-radius:14px;padding:14px;margin:10px 0;border:1px solid #cfdde8}
+.fl{border:3px solid var(--b)}
+.strip{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px}
+.strip button{flex:0 0 62px;min-height:68px;border:2px solid #b8cad8;background:#fff;border-radius:12px;font:inherit;color:var(--t)}
+.strip b{display:block;font-size:22px}.strip span{font-size:14px;color:var(--g)}
+.strip .on{background:var(--b);border-color:var(--b);color:#fff}.strip .on span{color:#dbe8f3}
+.strip .td{border-color:var(--a);border-width:4px}
+button,select,input,textarea{font:inherit}
+.btn{min-height:52px;padding:8px 16px;border:0;border-radius:12px;background:var(--b);color:#fff;font-weight:600}
+.btn.l{background:#fff;color:var(--b);border:2px solid var(--b)}.btn.d{background:var(--r)}
+.row{display:flex;gap:8px;align-items:center;margin:6px 0}.row>*{flex:1}
+input,select,textarea{width:100%;min-height:52px;padding:8px 12px;border:2px solid #b8cad8;border-radius:10px;background:#fff;color:var(--t)}
+textarea{min-height:150px}
+.it{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #e1eaf1}
+.it:last-child{border:0}.it a{flex:0 0 auto;padding:8px 12px;border-radius:10px;background:var(--s);color:var(--b);text-decoration:none;font-weight:600}
+.big{font-size:30px;font-weight:700}.sm{font-size:15px;color:var(--g)}.warn{color:var(--r);font-weight:600}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid #b8cad8;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;min-height:64px;border:0;background:none;font:inherit;font-size:16px;color:var(--g)}
+nav .on{color:var(--b);font-weight:700;box-shadow:inset 0 4px 0 var(--b)}
+#toast{position:fixed;left:14px;right:14px;bottom:calc(88px + env(safe-area-inset-bottom));background:var(--t);color:#fff;padding:12px 14px;border-radius:12px;display:none}
+</style></head><body>
+<header><h1>그리스 여행</h1><small>2026.11.23 – 12.10</small></header>
+<main id="v"></main><div id="toast"></div>
+<nav id="nv"></nav>
+<script>
+const $=s=>document.querySelector(s),pad=n=>String(n).padStart(2,'0'),WD='일월화수목금토';
+const dt=k=>new Date(2026,+k.slice(0,2)-1,+k.slice(3));
+const lab=k=>{const d=dt(k);return`${d.getMonth()+1}월 ${d.getDate()}일(${WD[d.getDay()]})`};
+const now=()=>{const d=new Date();return pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const D=[
+['11-23','인천','','출국 준비',['20:00 집 출발 → 인천공항 1터미널|Incheon Airport Terminal 1']],
+['11-24','아테네','Athnes Studio','아테네 도착',['00:05 TK91 인천 출발 → 이스탄불 경유','14:55 아테네 공항 도착','아크로폴리스역 → 숙소 Athnes Studio|Acropolis metro station Athens']],
+['11-25','아테네','Athnes Studio','아크로폴리스',['아크로폴리스|Acropolis of Athens','아크로폴리스 박물관|Acropolis Museum Athens','제우스 신전|Temple of Olympian Zeus','플라카 쇼핑|Plaka Athens']],
+['11-26','아테네','Athnes Studio','고대 아고라',['모나스티라키역|Monastiraki station Athens','고대 아고라|Ancient Agora of Athens','로만 아고라|Roman Agora Athens','국립 고고학 박물관|National Archaeological Museum Athens']],
+['11-27','아테네','Athnes Studio','수니온곶',['수니온곶 포세이돈 신전 (약 70km)|Temple of Poseidon Sounion']],
+['11-28','아테네','Athnes Studio','코린토스',['KTEL Kifisou 터미널 출발 (약 80km, 1시간 30분)|KTEL Kifissos bus terminal Athens','코린토스 운하|Corinth Canal','고대 코린토스|Ancient Corinth']],
+['11-29','아테네','Athnes Studio','델포이',['08:30 아테네 출발 → 11:30 델포이 도착 (약 180km)','델포이 신전·박물관|Delphi Archaeological Site','16:00 델포이 출발 → 아테네']],
+['11-30','아테네','Athnes Studio','시장과 전망대',['센트럴 마켓|Athens Central Market','프닉스 언덕 전망대|Pnyx Athens']],
+['12-01','칼람바카','','아테네 → 칼람바카',['아테네 라리사 역|Larissis Station Athens','기차 약 3시간 → Paleofarsalos역','버스 약 3시간 → 칼람바카|Kalambaka station']],
+['12-02','칼람바카','','메테오라',['칼람바카 → 메테오라 → 칼람바카|Meteora Greece']],
+['12-03','테살로니키','','칼람바카 → 테살로니키',['트리칼라까지 버스 약 1시간','라리사까지 철도 약 2시간','테살로니키 도착 (총 약 4시간)|Thessaloniki railway station']],
+['12-04','테살로니키','','테살로니키 시내',['시내 구경|Thessaloniki city centre']],
+['12-05','테살로니키','','테살로니키 투어',['투어 등 (세부 일정 미정)']],
+['12-06','헤라클리온','','크레타로 이동',['11:40 A3570 테살로니키 출발 → 12:50 헤라클리온 도착','공항 → 호텔|Heraklion airport']],
+['12-07','헤라클리온','','하니아',['헤라클리온 ↔ 하니아 (렌트카 여부 미정)|Chania Crete']],
+['12-08','헤라클리온','','키사모스',['일정표 표기 "키사모스" (세부 미정)|Kissamos Crete']],
+['12-09','아테네','','귀국길',['17:25 GQ215 헤라클리온 출발 → 18:15 아테네 도착','21:50 터키항공 아테네 출발','!주의: 두 항공편은 별도 예약입니다. 여유 약 3시간 35분']],
+['12-10','인천','','귀국',['00:20 이스탄불 도착 → 02:20 출발','18:20 인천 도착 → 귀가']]];
+const F=[
+['11-24','터키항공','TK91','인천 ICN','이스탄불 IST','00:05','05:55','이스탄불 대기 약 8시간 30분'],
+['11-24','터키항공','','이스탄불 IST','아테네 ATH','14:25','14:55',''],
+['12-06','에게안항공','A3570','테살로니키 SKG','헤라클리온 HER','11:40','12:50','좌석 7A·7B'],
+['12-09','스카이 익스프레스','GQ215','헤라클리온 HER','아테네 ATH','17:25','18:15','좌석 5A·5B. 이어지는 터키항공은 별도 예약이라 지연되면 보호받지 못합니다.'],
+['12-09','터키항공','','아테네 ATH','이스탄불 IST','21:50','12/10 00:20',''],
+['12-10','터키항공','','이스탄불 IST','인천 ICN','02:20','18:20','']];
+const CAT=['식비','교통비','입장료','카페·간식','숙박비','쇼핑','투어·액티비티','기타'],K=D.map(x=>x[0]);
+let S={e:[],d:{},f:{},r:0,rd:'',man:0},tab='s',sel=K.includes(now())?now():K[0],ed=null;
+try{Object.assign(S,JSON.parse(localStorage.getItem('gr26')||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem('gr26',JSON.stringify(S))}catch(e){msg('저장에 실패했습니다. 설정에서 백업을 받아 두세요.')}};
+let tm;const msg=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(tm);tm=setTimeout(()=>e.style.display='none',3500)};
+const eur=n=>'€'+n.toFixed(2),krw=n=>S.r?'약 '+Math.round(n*S.r).toLocaleString()+'원':'환율을 설정에서 입력하세요';
+const money=n=>`<div class="big">${eur(n)}</div><div class="sm">${krw(n)}</div>`;
+const fno=i=>S.f[i]?.n??F[i][2],fti=i=>S.f[i]?.t??'';
+const fcard=i=>{const f=F[i],n=fno(i);return`<div class="card fl"><div class="sm">${f[1]} · ${lab(f[0])}</div>
+<div class="big">${f[3]} → ${f[4]}</div><div>출발 ${f[5]} · 도착 ${f[6]} <span class="sm">(현지 시각)</span></div>
+${f[7]?`<div class="${f[7].includes('보호')?'warn':'sm'}">${f[7]}</div>`:''}
+<div class="row"><input data-f="${i}" data-k="n" value="${esc(n)}" placeholder="편명 입력"><input data-f="${i}" data-k="t" value="${esc(fti(i))}" placeholder="e-티켓 번호" inputmode="numeric"></div>
+${n?`<a class="btn l" style="display:block;text-align:center;text-decoration:none;line-height:36px" target="_blank" href="https://www.google.com/search?q=${encodeURIComponent(n+' 항공편 운항 상태')}">운항 상태·게이트 조회 (인터넷 필요)</a>`:''}</div>`};
+function vS(){const x=D.find(d=>d[0]===sel),fi=F.map((f,i)=>f[0]===sel?i:-1).filter(i=>i>=0);
+return`<div class="strip">${D.map(d=>`<button data-s="${d[0]}" class="${d[0]===sel?'on':''} ${d[0]===now()?'td':''}"><b>${+d[0].slice(3)}</b><span>${WD[dt(d[0]).getDay()]}${F.some(f=>f[0]===d[0])?' ✈':''}</span></button>`).join('')}</div>
+<h2>${lab(sel)}${sel===now()?' · 오늘':''}</h2><div class="sm">${x[1]}${x[2]?' · 숙소 '+x[2]:x[1]==='인천'?'':' · 숙소 미입력'} · ${x[3]}</div>
+${fi.map(fcard).join('')}
+<div class="card">${x[4].map(t=>{const[a,q]=t.split('|'),w=a[0]==='!';return`<div class="it"><span class="${w?'warn':''}">${esc(w?a.slice(1):a)}</span>${q?`<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}">지도</a>`:''}</div>`}).join('')}</div>
+<button class="btn" data-go="d">이 날 일기 쓰기</button>`}
+const vF=()=>'<h2>항공편</h2><div class="sm">시각은 모두 현지 기준입니다. 편명과 e-티켓 번호는 칸에 입력하면 이 폰에만 저장됩니다.</div>'+F.map((_,i)=>fcard(i)).join('');
+const opts=v=>K.map(k=>`<option value="${k}" ${k===v?'selected':''}>${lab(k)}</option>`).join('');
+const vD=()=>`<h2>여행 일기</h2><select id="ds">${opts(sel)}</select><textarea id="dx" placeholder="오늘 기억하고 싶은 것">${esc(S.d[sel]||'')}</textarea>
+<div id="dl"></div>`;
+const lD=()=>{const ks=Object.keys(S.d).filter(k=>S.d[k]).sort();$('#dl').innerHTML=ks.length?'<h2>지난 기록</h2>'+ks.map(k=>`<div class="card" data-s2="${k}"><b>${lab(k)}</b><div>${esc(S.d[k])}</div></div>`).join(''):''};
+const vX=()=>`<h2>경비 (유로)</h2><div class="card"><select id="xd">${opts(sel)}</select>
+<div class="row"><input id="xn" placeholder="항목 (예: 점심)"><input id="xa" type="number" inputmode="decimal" step="0.01" placeholder="금액 €"></div>
+<select id="xc">${CAT.map(c=>`<option>${c}</option>`).join('')}</select><input id="xm" placeholder="메모 (선택)" style="margin-top:8px">
+<div class="row"><button class="btn" id="xs">저장</button><button class="btn d" id="xx" style="display:none">삭제</button></div></div><div id="xl"></div>`;
+function lX(){const E=S.e,T=E.reduce((a,e)=>a+e.a,0),bc={};E.forEach(e=>bc[e.c]=(bc[e.c]||0)+e.a);
+const ds=[...new Set(E.map(e=>e.d))].sort();
+$('#xl').innerHTML=`<div class="card"><div class="sm">전체 합계</div>${money(T)}${Object.keys(bc).map(c=>`<div class="it"><span>${c}</span><span>${eur(bc[c])} <span class="sm">${krw(bc[c])}</span></span></div>`).join('')}</div>`+
+ds.map(d=>{const L=E.filter(e=>e.d===d),s=L.reduce((a,e)=>a+e.a,0);return`<div class="card"><b>${lab(d)}</b> <span class="sm">합계 ${eur(s)} · ${krw(s)}</span>${L.map(e=>`<div class="it" data-e="${e.id}"><span>${esc(e.n)}<div class="sm">${e.c}${e.m?' · '+esc(e.m):''}</div></span><b>${eur(e.a)}</b></div>`).join('')}</div>`}).join('')||'<div class="sm">아직 기록이 없습니다. 위에서 첫 지출을 저장하세요.</div>'}
+const vC=()=>`<h2>환율 (1유로)</h2><div class="card"><input id="rt" type="number" inputmode="decimal" step="0.01" placeholder="원" value="${S.r||''}">
+<div class="sm">${S.r?`기준일 ${S.rd}${S.man?' · 직접 입력':' · 자동 조회'}`:'아직 환율이 없습니다. 인터넷이 연결되면 자동으로 받습니다.'} 실제 카드·환전 환율과 다를 수 있습니다.</div>
+<button class="btn l" id="fx" style="margin-top:8px">자동으로 다시 받기</button></div>
+<h2>백업</h2><div class="card"><div class="sm">일기·경비·입력한 번호를 파일로 저장하거나 복원합니다. 브라우저 데이터를 지우면 기록이 사라지니 가끔 백업하세요.</div>
+<div class="row"><button class="btn" id="ex">백업 저장</button><button class="btn l" id="im">백업 불러오기</button></div><input type="file" id="fi" accept=".json" hidden></div>
+<h2>사용 안내</h2><div class="card sm">처음 한 번 인터넷에 연결해 이 앱을 열면, 이후 인터넷 없이도 일정·일기·경비를 쓸 수 있습니다. 지도, 환율, 항공 조회는 인터넷이 필요합니다.</div>`;
+const V={s:vS,f:vF,d:vD,x:vX,c:vC},N=[['s','일정'],['f','항공'],['d','일기'],['x','경비'],['c','설정']];
+function go(t){tab=t;$('#v').innerHTML=V[t]();$('#nv').innerHTML=N.map(n=>`<button data-t="${n[0]}" class="${n[0]===t?'on':''}">${n[1]}</button>`).join('');
+if(t==='d')lD();if(t==='x')lX();scrollTo(0,0)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-t],[data-s],[data-go],[data-e],[data-s2],#xs,#xx,#fx,#ex,#im');if(!b)return;const d=b.dataset;
+if(d.t)go(d.t);else if(d.go)go(d.go);else if(d.s){sel=d.s;go('s')}
+else if(d.s2){sel=d.s2;$('#ds').value=sel;$('#dx').value=S.d[sel];scrollTo(0,0)}
+else if(d.e){const x=S.e.find(z=>z.id==d.e);ed=x.id;$('#xd').value=x.d;$('#xn').value=x.n;$('#xa').value=x.a;$('#xc').value=x.c;$('#xm').value=x.m;$('#xx').style.display='';$('#xs').textContent='수정 저장';scrollTo(0,0)}
+else if(b.id==='xs'){const a=parseFloat($('#xa').value),n=$('#xn').value.trim();if(!n||!(a>=0)){msg('항목과 금액을 입력하세요.');return}
+const r={id:ed||Date.now(),d:$('#xd').value,n,a,c:$('#xc').value,m:$('#xm').value.trim()};
+if(ed)S.e=S.e.map(z=>z.id===ed?r:z);else S.e.push(r);ed=null;save();msg('저장했습니다.');go('x')}
+else if(b.id==='xx'){if(confirm('이 지출을 삭제할까요?')){S.e=S.e.filter(z=>z.id!==ed);ed=null;save();go('x')}}
+else if(b.id==='fx')fx(1);else if(b.id==='ex')ex();else if(b.id==='im')$('#fi').click()});
+document.addEventListener('input',e=>{const t=e.target;
+if(t.id==='dx'){S.d[sel]=t.value;save()}
+else if(t.dataset.f!==undefined){const i=t.dataset.f;S.f[i]=Object.assign({},S.f[i],{[t.dataset.k]:t.value.trim()});save()}
+else if(t.id==='rt'){S.r=parseFloat(t.value)||0;S.man=1;S.rd=new Date().toLocaleDateString('ko-KR');save()}});
+document.addEventListener('change',e=>{const t=e.target;
+if(t.id==='ds'){sel=t.value;$('#dx').value=S.d[sel]||''}
+else if(t.id==='fi'&&t.files[0]){const R=new FileReader();R.onload=()=>{try{const j=JSON.parse(R.result);if(!Array.isArray(j.e))throw 0;if(!confirm('현재 기록을 백업 내용으로 바꿉니다. 계속할까요?'))return;S=Object.assign({e:[],d:{},f:{},r:0,rd:'',man:0},j);save();msg('복원했습니다.');go('c')}catch(x){msg('올바른 백업 파일이 아닙니다.')}};R.readAsText(t.files[0]);t.value=''}});
+function ex(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='그리스여행-백업-'+new Date().toISOString().slice(0,10)+'.json';a.click();msg('백업 파일을 저장했습니다.')}
+async function fx(f){if(S.man&&!f)return;try{const j=await(await fetch('https://open.er-api.com/v6/latest/EUR')).json(),v=j.rates.KRW;if(!v)throw 0;S.r=v;S.rd=new Date().toLocaleDateString('ko-KR');S.man=0;save();if(tab==='c')go('c');if(f)msg('환율을 갱신했습니다.')}catch(e){if(f)msg('환율을 받지 못했습니다. 직접 입력하거나 이전 값을 쓰세요.')}}
+go('s');fx();
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+</script></body></html>
