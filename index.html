@@ -321,6 +321,7 @@ ${S.lg.map((g,i)=>`<div class="it"><span><b>${esc(g.n)}</b><div class="sm">${lab
 <h2>효과음</h2><div class="card"><div class="row"><button class="btn ${S.snd?'':'l'}" id="sndon">켜기</button><button class="btn ${S.snd?'l':''}" id="sndoff">끄기</button></div><div class="sm">탭이나 버튼을 누를 때 짧은 효과음을 냅니다. 폰이 무음 모드면 나지 않습니다.</div></div>
 <h2>백업</h2><div class="card"><div class="sm">일기·경비·일정 수정·숙소·입력한 번호를 파일로 저장하거나 복원합니다. 브라우저 데이터를 지우면 기록이 사라지니 가끔 백업하세요.</div>
 <div class="row"><button class="btn" id="ex">백업 저장</button><button class="btn l" id="im">백업 불러오기</button></div><input type="file" id="fi" accept=".json" hidden></div>
+<h2>앱 버전</h2><div class="card"><div>현재 버전 <b>2026.11.15-d</b></div><button class="btn l" id="upd" style="width:100%;margin-top:8px">최신 버전 다시 받기</button><div class="sm">GitHub에 새 파일을 올렸는데 화면이 그대로면 누르세요. 일기·경비 등 기록은 지워지지 않습니다.</div></div>
 <h2>사용 안내</h2><div class="card sm">처음 한 번 인터넷에 연결해 이 앱을 열면, 이후 인터넷 없이도 일정·일기·경비를 쓸 수 있습니다. 지도, 번역, 관광지 정보, 환율, 항공 조회는 인터넷이 필요합니다.</div>`;
 const V={s:vS,f:vF,t:vT,g:vG,d:vD,x:vX,c:vC},N=[['s','일정'],['f','항공'],['t','번역'],['g','그리스어'],['d','일기'],['x','경비']];
 function go(t,keep){tab=t;$('#v').innerHTML=V[t]();$('#nv').innerHTML=N.map(n=>`<button data-t="${n[0]}" class="${n[0]===t?'on':''}">${n[1]}</button>`).join('');
@@ -328,8 +329,10 @@ const gr=$('#gear');if(gr)gr.classList.toggle('on',t==='c');
 if(t==='d')lD();if(t==='x')lX();
 if(t==='s'&&!keep){try{const o=$('.strip .on');o&&o.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}}
 if(!keep)scrollTo(0,0)}
-document.addEventListener('click',e=>{const b=e.target.closest('[data-t],[data-s],[data-go],[data-e],[data-s2],[data-del],[data-ed],[data-pi],[data-lgx],[data-pk],[data-r],[data-gc],[data-gs],#gb,[data-ol],#ouse,#oall,#xs,#xx,#fx,#ex,#im,#tr,#sw,#sp,#pm,#pa,#pc,#lga,#sndon,#sndoff');if(!b)return;const d=b.dataset;
+document.addEventListener('click',e=>{const b=e.target.closest('[data-t],[data-s],[data-go],[data-e],[data-s2],[data-del],[data-ed],[data-pi],[data-lgx],[data-pk],[data-r],[data-gc],[data-gs],#gb,[data-ol],#ouse,#oall,#xs,#xx,#fx,#ex,#im,#tr,#sw,#sp,#pm,#pa,#pc,#lga,#sndon,#sndoff,#upd');if(!b)return;const d=b.dataset;
 if(b.id!=='sp'&&d.gs===undefined)tick();
+if(b.id==='upd'){msg('최신 버전을 받는 중…');(async()=>{try{if('caches'in window){for(const k of await caches.keys()){const c=await caches.open(k);for(const q of await c.keys()){if(new URL(q.url).origin===location.origin)await c.delete(q)}}}
+if(navigator.serviceWorker){const rg=await navigator.serviceWorker.getRegistration();if(rg)await rg.update()}}catch(e){}location.reload()})();return}
 if(b.id==='sndon'||b.id==='sndoff'){S.snd=b.id==='sndon'?1:0;save();if(S.snd)tick();go('c',1);return}
 if(d.t){if(d.t==='s'){const n=now();if(K.includes(n))sel=n;pm=false;pe=null;exp=null}go(d.t)}
 else if(d.go)go(d.go);else if(d.s){sel=d.s;pm=false;pe=null;exp=null;go('s')}
