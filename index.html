@@ -34,7 +34,9 @@ h2{font-size:22px;margin:14px 0 6px;text-wrap:balance}
 .strip .td{border-color:var(--a);border-width:4px}
 button,select,input,textarea{font:inherit}
 .btn{min-height:52px;padding:8px 16px;border:0;border-radius:12px;background:var(--b);color:#fff;font-weight:600}
-.btn.l{background:var(--card);color:var(--b);border:2px solid var(--b)}.btn.d{background:var(--r)}
+.btn.l{background:var(--card);color:var(--b);border:2px solid var(--b)}.btn.d{background:var(--r)}.btn.g{background:#1d7a3e}
+.oln{display:block;width:100%;text-align:left;margin:5px 0;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--t)}
+.oln.on2{border-color:var(--b);background:#e4ecf4;font-weight:600}
 .mini{min-height:44px;padding:4px 14px;flex:0 0 auto}
 .row{display:flex;gap:8px;align-items:center;margin:6px 0}.row>*{flex:1;min-width:0}
 input,select,textarea{width:100%;min-height:52px;padding:8px 12px;border:2px solid #b8cad8;border-radius:10px;background:var(--card);color:var(--t)}
@@ -137,13 +139,15 @@ if(S.sr!==1&&S.sr!==0.5)S.sr=1;
 if(S.snd===undefined)S.snd=1;
 /* 탭 효과음: 파일 없이 짧은 '톡' 소리 생성 */
 let AC=null;
+const CLK="data:audio/wav;base64,UklGRiQPAABXQVZFZm10IBAAAAABAAEAgLsAAAB3AQACABAAZGF0YQAPAABhANb/MgBhAGH6F+1U24rEl65opmSsU7YBwjrSuORe93IKahzFK5o4CUI6R4NICUa0P/w1tCmRG1EM6PxI7gjh3dV4zR3IA8ZJx4/LfNKt23/mXfKT/jAKxBTjHc0kVSmPKyMrMChhIxgdjBUPDfIDxvoU8iLqX+Ng3ljbSNpV24zeleP/6XjxofnxAQkKkBEFGPUcNiCtIUAhBB8hG8cVTg8zCNUAgPmS8oDsnecq5F/iQOK748TmJet48IP2+fxrA6sJeg9MFMYX3BlXGj8Z/BakEzYPGQqfBPf+bvlr9Dbw6eyQ6mXpruk+68ntTvGj9Vz6Jf/PAzUIEgwjD0sRcxKJEqUR0g8LDaIJ9AUAAv79S/r79jn0WfJN8fvwgvHK8rv0Tvc2+jz9XwBpAxkGXwgSChULeAs9C2EKBQlBByEFygJpACz+MPyF+kf5g/gs+Ez44/jh+Sv7kfzq/Uz/rgDMAaUCUgOzA9ADwgNuA9QCJQJ5AdMAPwC+/2b/Rf9A/1//o//a//r/FgAhACUAOAAzAP//zv/F/9D/1f/O/7z/q/+l/6r/uv/U//X/CwAVAB4AIQAWABIAIAAqACUAIwApACIACgD6//X/8//0//L/3f+6/6P/rP/D/8b/vP/J/+3/FAAzAD4APgBHAFUAWgBXAEoAOAAuACIACgD4//L/6//h/9X/w/+t/6T/tv/U/+X//v8lADwAOQA3ACwACwDy/+3/5//e/9n/2//p//z/BgAMAAwABQAEABEAIQAuADgAOAAxACoAIgAZAA4A/P/t/+j/2P/I/9L/6f/4/wgAEwASABIAFAAZACgANwA5ADIAJQAMAPX/5P/X/9z/7f/2//r/AAADAAMACAANAAwACwAKAAkACQAGAAYADgARAAQA+//2//D/7f/s/+//9f/6/wAACwARAAwABwAHAPv/6//s//T/9P/2////BAADAAAA/f/8/wAABQAGAAkACQAHAAcABwADAP//AwAGAP//9v/0//j/AAAFAAEA+f/3//v//f8AAP///f/8//3//P/9/////v/9//z/+//6//z/AAAFAAYABAADAAMAAQAAAAAA/f/8//7/AAAAAAAAAAADAAMAAQAAAAAA/v/9//7////+/wAAAAAAAAIABAADAAEAAQAAAAAAAAD///7/AAAAAAAAAAAAAAIAAgABAAAAAAAAAAAA/////wAAAAAAAAAAAAAAAAAA///+///////+////AAAAAAAAAAAAAAEAAgACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgABAAAA//8AAAAAAAABAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA/////////v8AAAAAAAACAAEAAAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA///+/wAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";let CKB=null,CKL=0;
+function ckLoad(){if(CKL)return;CKL=1;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+const bs=atob(CLK.split(',')[1]),u=new Uint8Array(bs.length);for(let i=0;i<bs.length;i++)u[i]=bs.charCodeAt(i);AC.decodeAudioData(u.buffer,b=>{CKB=b},()=>{CKL=0})}catch(e){CKL=0}}
 function tick(){if(!S.snd)return;try{
 AC=AC||new (window.AudioContext||window.webkitAudioContext)();
 if(AC.state==='suspended')AC.resume();
-const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime;
-o.type='sine';o.frequency.setValueAtTime(880,t);o.frequency.exponentialRampToValueAtTime(440,t+.06);
-g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+.08);
-o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.09)}catch(e){}}
+if(!CKB){ckLoad();const a=new Audio(CLK);a.volume=.8;a.play().catch(()=>{});return}
+const s=AC.createBufferSource();s.buffer=CKB;const g=AC.createGain();g.gain.value=.8;
+s.connect(g);g.connect(AC.destination);s.start()}catch(e){}}
 const save=()=>{try{localStorage.setItem('gr26',JSON.stringify(S))}catch(e){msg('저장에 실패했습니다. 설정에서 백업을 받아 두세요.')}};
 let tm;const msg=t=>{const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(tm);tm=setTimeout(()=>e.style.display='none',3500)};
 const eur=n=>'€'+n.toFixed(2),krw=n=>S.r?'약 '+Math.round(n*S.r).toLocaleString()+'원':'환율을 설정에서 입력하세요';
@@ -191,7 +195,7 @@ rows=L.map((p,i)=>`<div class="it pit" data-i="${i}" ${pe===i?'style="background
 else rows=L.map((p,i)=>{const key=sel+':'+i,open=exp===key,tap=p.q||p.b;
 return`<div class="it"><span ${tap?`data-pi="${i}" role="button"`:''}>${ln(p)}${tap?` <span class="chv">${open?'▲':'▼'}</span>`:''}</span><span style="display:flex;gap:6px;flex:0 0 auto">${org&&(p.q||p.b)?`<a target="_blank" title="숙소에서 길찾기" href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(org)}&destination=${encodeURIComponent(p.q||p.b)}&travelmode=transit">🚌</a>`:''}${p.q?`<a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.q)}">지도</a>`:''}</span></div>${open?`<div class="pinfo" id="pinfo">${infoInner(IC[key])}</div>`:''}`}).join('')||'<div class="sm">계획된 장소가 없습니다. 편집 버튼으로 추가하세요.</div>';
 return`<div class="strip">${D.map(d=>`<button data-s="${d[0]}" class="${d[0]===sel?'on':''} ${d[0]===now()?'td':''}"><b>${+d[0].slice(3)}</b><span>${WD[dt(d[0]).getDay()]}${F.some(f=>f[0]===d[0])?' ✈':''}</span></button>`).join('')}</div>
-<div class="row" style="justify-content:space-between"><h2 style="margin:0">${lab(sel)}${sel===now()?' · 오늘':''}</h2><button class="btn mini" data-go="d" style="flex:0 0 auto">하루 일기</button></div><div class="sm">${x[1]} · ${x[2]}</div>
+<div class="row" style="justify-content:space-between"><h2 style="margin:0">${lab(sel)}${sel===now()?' · 오늘':''}</h2><button class="btn g mini" data-go="d" style="flex:0 0 auto">📝 하루 일기</button></div><div class="sm">${x[1]} · ${x[2]}</div>
 ${g?`<div class="card"><div class="sm">숙소</div><div class="it"><span><b>${esc(g.n)}</b><div class="sm">${lab(g.ci)} 체크인 ~ ${lab(g.co)} 체크아웃</div></span><a target="_blank" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.ad||g.n+' '+x[1])}">지도</a></div></div>`:''}
 ${fi.map(fcard).join('')}
 <div class="card plan"><div class="pt">오늘의 일정${pm?' · 편집 중':''}</div><div id="plist" data-k="${sel}">${rows}</div>
@@ -202,7 +206,10 @@ return`<div class="it"><span data-ri="${i}" role="button"><b>${esc(p.b)}</b> <sp
 const vF=()=>'<h2>항공편</h2><div class="sm">시각은 모두 현지 기준입니다. 편명과 e-티켓 번호는 칸에 입력하면 이 폰에만 저장됩니다.</div>'+F.map((_,i)=>fcard(i)).join('');
 const opts=v=>K.map(k=>`<option value="${k}" ${k===v?'selected':''}>${lab(k)}</option>`).join('');
 const LN={ko:'한국어',el:'그리스어',en:'영어'},LC={ko:'ko-KR',el:'el-GR',en:'en-US'},TESS={ko:'kor',el:'ell',en:'eng'},TL={kor:'한국어',ell:'그리스어',eng:'영어'};
-let tQ='',tR='';
+let tQ='',tR='',oL=[],oSel=new Set();
+const oHtml=()=>!oL.length?'':`<div class="sm" style="margin-top:12px">사진에서 찾은 문장 — 번역할 문장만 눌러서 고르세요</div>
+${oL.map((l,i)=>`<button class="oln ${oSel.has(i)?'on2':''}" data-ol="${i}">${esc(l)}</button>`).join('')}
+<div class="row"><button class="btn mini" id="ouse">선택한 문장 번역</button><button class="btn l mini" id="oall">전체 번역</button></div>`;
 const resHtml=()=>`<div style="font-size:22px;font-weight:600;margin:8px 0">${esc(tR)}</div>
 <button class="btn l" id="sp" style="width:100%">🔊 발음 듣기</button>
 <div class="row" style="margin-top:6px">${[1,0.5].map(r=>`<button class="btn l mini rate ${S.sr===r?'onr':''}" data-r="${r}">x ${r}</button>`).join('')}</div>`;
@@ -212,7 +219,7 @@ const vT=()=>`<h2>번역</h2><div class="card">
 <textarea id="ti" style="min-height:90px" placeholder="번역할 문장을 입력하세요 (짧은 문장)">${esc(tQ)}</textarea>
 <div class="row"><button class="btn" id="tr">번역하기</button><label class="btn l" for="cam" style="text-align:center;line-height:36px">📷 사진 번역</label></div>
 <input type="file" id="cam" accept="image/*" capture="environment" hidden>
-<div id="to">${tR?resHtml():''}</div></div>
+<div id="to">${tR?resHtml():''}</div><div id="ol">${oHtml()}</div></div>
 <div class="card sm">번역과 사진 인식은 인터넷이 필요합니다. 번역은 하루 사용량 한도가 있고(설정에서 이메일을 넣으면 늘어남), 사진 번역은 처음 쓸 때 인식 파일을 내려받느라 수십 초 걸릴 수 있습니다. 설정에서 인식 파일을 미리 받아 두면 빨라집니다.</div>`;
 async function doTr(){const q=$('#ti').value.trim();if(!q){msg('번역할 문장을 입력하세요.');return}
 if(S.ts===S.tt){msg('두 언어가 같습니다. 오른쪽 언어를 바꿔 주세요.');return}
@@ -223,11 +230,19 @@ const j=await(await fetch(u)).json();const t=j&&j.responseData&&j.responseData.t
 if(!t||String(j.responseStatus)!=='200')throw 0;
 tR=t;$('#to').innerHTML=resHtml()}catch(e){tR='';$('#to').innerHTML='<div class="warn">번역을 받지 못했습니다. 인터넷 연결이나 하루 한도를 확인하세요.</div>'}}
 async function doOcr(file){if(!window.Tesseract){msg('사진 인식 기능을 불러오지 못했습니다. 인터넷에 연결된 상태로 앱을 다시 열어 보세요.');return}
-$('#to').innerHTML='<div class="sm">사진에서 글자를 읽는 중… 처음에는 오래 걸릴 수 있습니다.</div>';
-try{const w=await Tesseract.createWorker(TESS[S.ts]);const r=await w.recognize(file);await w.terminate();
+$('#to').innerHTML='<div class="sm">사진에서 글자를 읽는 중… 처음에는 인식 파일을 받느라 오래 걸릴 수 있습니다.</div>';$('#ol').innerHTML='';
+try{let src=file;
+try{const bmp=await createImageBitmap(file),MAX=1600,sc=Math.min(1,MAX/Math.max(bmp.width,bmp.height));
+if(sc<1){const cv=document.createElement('canvas');cv.width=Math.round(bmp.width*sc);cv.height=Math.round(bmp.height*sc);
+cv.getContext('2d').drawImage(bmp,0,0,cv.width,cv.height);
+src=await new Promise(res=>cv.toBlob(res,'image/jpeg',.92))||file}}catch(e){}
+const w=await Tesseract.createWorker(TESS[S.ts]);const r=await w.recognize(src);await w.terminate();
+const lines=(r.data.lines||[]).map(l=>(l.text||'').replace(/\s+/g,' ').trim()).filter(x=>x.length>1);
 const x=(r.data.text||'').replace(/\s+/g,' ').trim();
-if(!x){$('#to').innerHTML='<div class="warn">글자를 찾지 못했습니다. 글자가 크고 밝게 나오도록 다시 찍어 보세요.</div>';return}
-tQ=x;$('#ti').value=x;doTr()}catch(e){$('#to').innerHTML='<div class="warn">사진 인식에 실패했습니다. 다시 시도해 보세요.</div>'}}
+if(!x){$('#to').innerHTML='<div class="warn">글자를 찾지 못했습니다. 글자가 화면에 크고 반듯하게 나오도록 가까이에서 다시 찍어 보세요. 왼쪽 언어가 사진 속 글자의 언어와 같은지도 확인하세요.</div>';oL=[];return}
+oL=lines.length>1?lines:[x];oSel=new Set();
+$('#ol').innerHTML=oHtml();
+tQ=x;$('#ti').value=x;doTr()}catch(e){$('#to').innerHTML='<div class="warn">사진 인식에 실패했습니다. 인터넷 연결을 확인하고 다시 시도해 보세요.</div>'}}
 function speakTxt(txt,lg){if(!txt)return;if(!('speechSynthesis'in window)){msg('이 기기는 음성 재생을 지원하지 않습니다.');return}
 try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang=lg;u.rate=S.sr||1;
 const p=lg.slice(0,2),v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith(p));if(v)u.voice=v;
@@ -313,7 +328,7 @@ const gr=$('#gear');if(gr)gr.classList.toggle('on',t==='c');
 if(t==='d')lD();if(t==='x')lX();
 if(t==='s'&&!keep){try{const o=$('.strip .on');o&&o.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}}
 if(!keep)scrollTo(0,0)}
-document.addEventListener('click',e=>{const b=e.target.closest('[data-t],[data-s],[data-go],[data-e],[data-s2],[data-del],[data-ed],[data-pi],[data-lgx],[data-pk],[data-r],[data-gc],[data-gs],#gb,#xs,#xx,#fx,#ex,#im,#tr,#sw,#sp,#pm,#pa,#pc,#lga,#sndon,#sndoff');if(!b)return;const d=b.dataset;
+document.addEventListener('click',e=>{const b=e.target.closest('[data-t],[data-s],[data-go],[data-e],[data-s2],[data-del],[data-ed],[data-pi],[data-lgx],[data-pk],[data-r],[data-gc],[data-gs],#gb,[data-ol],#ouse,#oall,#xs,#xx,#fx,#ex,#im,#tr,#sw,#sp,#pm,#pa,#pc,#lga,#sndon,#sndoff');if(!b)return;const d=b.dataset;
 if(b.id!=='sp'&&d.gs===undefined)tick();
 if(b.id==='sndon'||b.id==='sndoff'){S.snd=b.id==='sndon'?1:0;save();if(S.snd)tick();go('c',1);return}
 if(d.t){if(d.t==='s'){const n=now();if(K.includes(n))sel=n;pm=false;pe=null;exp=null}go(d.t)}
@@ -350,6 +365,10 @@ else if(b.id==='xs'){const a=parseFloat($('#xa').value),n=$('#xn').value.trim();
 const r={id:ed||Date.now(),d:$('#xd').value,n,a,c:$('#xc').value,m:$('#xm').value.trim()};
 if(ed)S.e=S.e.map(z=>z.id===ed?r:z);else S.e.push(r);ed=null;save();msg('저장했습니다.');go('x')}
 else if(b.id==='xx'){S.e=S.e.filter(z=>z.id!==ed);ed=null;save();msg('삭제했습니다.');go('x')}
+else if(d.ol!==undefined){const i=+d.ol;oSel.has(i)?oSel.delete(i):oSel.add(i);$('#ol').innerHTML=oHtml()}
+else if(b.id==='ouse'){if(!oSel.size){msg('먼저 번역할 문장을 눌러 선택하세요.');return}
+const t=[...oSel].sort((a,b2)=>a-b2).map(i=>oL[i]).join(' ');tQ=t;$('#ti').value=t;doTr()}
+else if(b.id==='oall'){const t=oL.join(' ');tQ=t;$('#ti').value=t;doTr()}
 else if(b.id==='tr')doTr();
 else if(b.id==='sw'){const z=S.ts;S.ts=S.tt;S.tt=z;save();const i=$('#ti');if(i)tQ=i.value;go('t')}
 else if(b.id==='sp')speak();
@@ -387,6 +406,7 @@ async function fx(f){if(S.man&&!f)return;try{const j=await(await fetch('https://
 base=new Date(2026,10,23),df=Math.round((t0-base)/86400000);
 $('#dday').textContent=df<0?'D'+df:df===0?'D-DAY':'D+'+(df+1)})();
 go('s');fx();
+document.addEventListener('pointerdown',function f(){ckLoad();document.removeEventListener('pointerdown',f)});
 if(navigator.storage&&navigator.storage.persist)try{navigator.storage.persist()}catch(e){}
 if('serviceWorker' in navigator)try{navigator.serviceWorker.register('sw.js')}catch(e){}
 </script></body></html>
